@@ -1,0 +1,11 @@
+25.02.2011 v2.0.1
+	- Modified Updateable on Updateable collisions so that they are inelastic instead
+	  of elastic. There is less bounciness but also less craziness (balls would 
+	  perpetually bounce when there was a pile of them; floating point calcs. and
+	  poor collision detection algorithm would allow large amounts of energy to 
+	  suddenly appear in the system and make things go crazy)
+	  
+XX.02.2011 v2.0.0
+	- Stripped the old code down to the bare essentials. Moved classes and methods
+	  around to separate the engine from the game. Modified calculations so they would
+	  run a little faster and used a design pattern or two to make things go really fast.

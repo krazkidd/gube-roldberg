@@ -1,0 +1,77 @@
+This file records TODOs that have to do with the big picture, the general
+direction of the project. There are some more TODOs in the code.
+
+* add 'save parts' button so reset doesn't go all the way back to first run
+* fix model space and world space
+* make all parts Updateable and get rid of instanceof? (I think the performance
+	hit would be greater than the gain.)
+* need to pass gravity argument to physics (local or global). also, air density
+	for air resistance calcs.
+* need collision detection for ovals (the balloon)
+* PartFactory seems superfluous. If there is a better way to create parts than
+	a switch-block, it should be removed.
+* how to take advantage of multiple cores? (is there a library?)
+* rename Updateable -> Mobile (or Moveable)
+* need to zoom in on world
+* move update implementation to Updateable? (Save update for special things, no need
+	to implement kinematics equations for each Updateable)...(interfaces can't implement
+	methods)
+* is there any way to make the world transformation permanent (in device space)?
+* need to add status panel so messages show
+* sometimes, every object just disappears...(pos = NaN?)
+
+* customizeable mouse/keys
+* remove printStackTrace's. give better error messages
+* is the Factory pattern very useful here? or is there a better way to implement it
+	than a switch block?
+* need some kind of table for friction coefficients, since they depend upon the
+	surface materials
+* will dropping frames speed things up when there are a lot of objects? (need profiler)
+
+* ramp collision detection when placing part is not working
+* highlight collisions mode
+* shouldn't just be projecting colliding parts before doing physics...maybe, maybe not?
+	try playing with a bowl of baseballs and dropping a bowling ball
+
+* getShape() in PhysicsObject but no instance member shape?? (in Part instead)
+* thought of making CollisionResult static...but what if we want to do parallel threads?
+* future optimization? split screen up into chunks and only check objects in each chunk. 
+	This could lead to problems with fast-moving objects. And the chunk-divisioning process
+	may have too much overhead unless there are a *lot* of objects
+* special perfectly inelastic collision case? (slime ball) Does it need to be special 
+	or does the engine account for this well enough already?
+* resting objects need to have zero velocity...(otherwise extra energy is appearing in the system)
+
+* NaN happens very often w/ baseballs and slimeballs. i think they overlap the same type
+	at some point and this causes a division by zero. (NaN also happens w/ basketballs and bowling balls)
+* allow restore + temp save? that is: parts are placed, game is run, results are positive, restore to before run, 
+	then temp save
+
+////////////
+* change gravity...(i think i made the change in the Part's update method)
+	- use vector for location of grav. source (magnitude for strength? this would
+		require some calculation before calling update())
+* fix circleWithRectangle collision (balls and corners don't work correctly)
+
+* update loop is *too* fast. this makes gravity appear fixed and slime balls don't 
+	roll down ramps
+	
+* how to record for later playback: save parts list and save timeDiff's!! (this might
+	make it imperative for timeDiff's to always be the same, though...because something
+	neat might happen but might not happen again...)
+
+* share user-created parts: the parts just need to define a (convex) shape! and any
+	special physics and colors
+	
+* use shear transform for underwater effects
+
+
+
+
+
+
+
+DONE huge bug: basketballs + bowling balls = devious fun
+DONE all collisions should be inelastic since all the objects are macroscopic
+DONE ball-ball collisions need friction!! (they bounce forever otherwise)
+DONE give each part a debug color

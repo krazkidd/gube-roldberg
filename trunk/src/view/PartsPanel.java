@@ -166,9 +166,10 @@ public class PartsPanel extends JPanel {
 		 */
 		public PartButton(PartType aPartType) {
 			this.type = aPartType;
-			Icon anIcon = new ImageIcon("resources/images/button_thumbs/"
-					+ aPartType.toString().toLowerCase() + "_thumb.png");
-			this.setIcon(anIcon);
+			//Icon anIcon = new ImageIcon("resources/images/button_thumbs/"
+			//		+ aPartType.toString().toLowerCase() + "_thumb.png");
+			//this.setIcon(anIcon);
+			this.setText(type.toString());
 		}
 
 		/**

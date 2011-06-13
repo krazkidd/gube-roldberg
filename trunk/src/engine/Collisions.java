@@ -18,6 +18,7 @@
 package engine;
 
 import java.awt.Polygon;
+import java.awt.Shape;
 
 /*+----------------------------------------------------------------------
 ||
@@ -349,7 +350,9 @@ public class Collisions {
 		double[] maxMinA = { 0.0, 0.0 };
 		double[] maxMinB = { 0.0, 0.0 };
 
-		Polygon polyB = (Polygon) b.getShape();
+		Shape shapeB = (Shape) b.getShape();
+		
+		//TODO must use PathIterator instead of Polygon
 
 		double minIntervalDistance = Double.MAX_VALUE;
 		Vector translationAxis = new Vector();

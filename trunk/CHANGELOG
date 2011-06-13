@@ -1,3 +1,7 @@
+10.06.2011
+	- Changed user space significantly. Parts now use dimensions in meters instead
+	  of pixels. The world is now zoomable. 
+
 25.02.2011 v2.0.1
 	- Modified Updateable on Updateable collisions so that they are inelastic instead
 	  of elastic. There is less bounciness but also less craziness (balls would 

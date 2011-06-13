@@ -27,6 +27,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 /*+----------------------------------------------------------------------
 ||
@@ -104,8 +105,8 @@ public class AboutFrame extends JFrame {
 		btnClose.addActionListener(new btnCloseListener());
 
 		// add stuff to panel
-		JLabel lblAuthor = new JLabel("Gube Roldberg  Copyright 2008  Mark Ross and Duncan Krassikoff\nThis program comes with ABSOLUTELY NO WARRANTY.\nThis is free software, and you are welcome to redistribute it under certain conditions; see COPYING for details.");
-		pnlIcon.add(lblAuthor, BorderLayout.CENTER);
+		JTextArea txtAuthor = new JTextArea("Gube Roldberg\nCopyright 2008 Mark Ross and Duncan Krassikoff\nThis program comes with ABSOLUTELY NO WARRANTY.\nThis is free software, and you are welcome to redistribute it under certain conditions;\nsee COPYING for details.");
+		pnlIcon.add(txtAuthor, BorderLayout.CENTER);
 		pnlIcon.add(btnClose, BorderLayout.SOUTH);
 
 		// add panel and set window properties

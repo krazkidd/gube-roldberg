@@ -31,7 +31,7 @@ import engine.CollisionBoundType;
  * <br>
  * Order in which values are stores:<br>
  * MUk / MUs / height / width / mass / CollisionType / draw (debug) color
- * height and width are in cm * 100. mass is in g
+ * height and width are in m. mass is in g
  * 
  * @author Mark Ross
  * @author Duncan Krassikoff
@@ -71,36 +71,37 @@ import engine.CollisionBoundType;
 public enum PartType {
 	
 	// Baseball
-	BASEBALL(0.3, 0.5, 10, 10, 143, CollisionBoundType.ELLIPSE, Color.WHITE),
+	BASEBALL(0.3, 0.5, 0.10, 0.10, 143, CollisionBoundType.ELLIPSE, Color.WHITE),
 
 	// Basketball
-	BASKETBALL(0.8, 0.8, 35, 35, 620, CollisionBoundType.ELLIPSE, Color.ORANGE),
+	BASKETBALL(0.8, 0.8, 0.35, 0.35, 620, CollisionBoundType.ELLIPSE, Color.ORANGE),
 
 	// Bowling ball
-	BOWLINGBALL(0.2, 0.9, 30, 30, 3629, CollisionBoundType.ELLIPSE, Color.BLUE),
+	BOWLINGBALL(0.2, 0.9, 0.30, 0.30, 3629, CollisionBoundType.ELLIPSE, Color.BLUE),
 
 	// Slimeball
-	SLIMEBALL(0.0, 0.1, 12, 12, 100, CollisionBoundType.ELLIPSE, Color.RED),
+	SLIMEBALL(0.0, 0.1, 0.12, 0.12, 100, CollisionBoundType.ELLIPSE, Color.RED),
 
 	// Balloon
-	BALLOON(0.9, 0.9, 40, 25, 2, CollisionBoundType.ELLIPSE, Color.GREEN),
+	BALLOON(0.9, 0.9, 0.40, 0.25, 2, CollisionBoundType.ELLIPSE, Color.GREEN),
 
 	// Horizontal Brick wall
-	WALLBRICKHORIZONTAL(0.65, 0.5, 20, 115, 10000, CollisionBoundType.RECTANGLE, Color.MAGENTA),
+	WALLBRICKHORIZONTAL(0.65, 0.5, 0.20, 1.15, 10000, CollisionBoundType.RECTANGLE, Color.MAGENTA),
 
 	// Vertical Brick Wall
-	WALLBRICKVERTICAL(0.65, 0.5, 115, 20, 10000, CollisionBoundType.RECTANGLE, Color.MAGENTA),
+	WALLBRICKVERTICAL(0.65, 0.5, 1.15, 0.20, 10000, CollisionBoundType.RECTANGLE, Color.MAGENTA),
 
 	// Horizontal Glass Wall
-	WALLGLASSHORIZONTAL(0.99, 0.98, 20, 115, 10000,	CollisionBoundType.RECTANGLE, Color.CYAN),
+	WALLGLASSHORIZONTAL(0.99, 0.98, 0.20, 1.15, 10000,	CollisionBoundType.RECTANGLE, Color.CYAN),
 
 	// Vertical Glass Wall
-	WALLGLASSVERTICAL(0.99, 0.98, 115, 20, 10000, CollisionBoundType.RECTANGLE, Color.CYAN),
+	WALLGLASSVERTICAL(0.99, 0.98, 1.15, 0.20, 10000, CollisionBoundType.RECTANGLE, Color.CYAN),
 
 	// Ramp
-	RAMPLEFTFACE(0.99, 0.98, 74, 100, 4000, CollisionBoundType.POLYGON, Color.YELLOW),
+	RAMPLEFTFACE(0.99, 0.98, 0.74, 1.00, 4000, CollisionBoundType.POLYGON, Color.YELLOW),
 
-	RAMPRIGHTFACE(0.99, 0.98, 74, 100, 4000, CollisionBoundType.POLYGON, Color.YELLOW);
+	RAMPRIGHTFACE(0.99, 0.98, 0.74, 1.00, 4000, CollisionBoundType.POLYGON, Color.YELLOW);
+	
 /*
 	// Free Roaming Chicken object
 	CHICKEN(0.99, 0.98, 48, 48, 10, CollisionBoundType.CIRCLE),
@@ -160,11 +161,11 @@ public enum PartType {
 	/**
 	 * Height for this PartType
 	 */
-	private final int height;
+	private final double height;
 	/**
 	 * Width for this PartType
 	 */
-	private final int width;
+	private final double width;
 	/**
 	 * Mass for this PartType
 	 */
@@ -180,7 +181,7 @@ public enum PartType {
 	
 	// constructors /////////////////////////////////////////
 	
-	PartType(double muk, double mus, int h, int w, int m,
+	PartType(double muk, double mus, double h, double w, int m,
 			CollisionBoundType colBoundType, Color color) {
 		this.MUk = muk;
 		this.MUs = muk;

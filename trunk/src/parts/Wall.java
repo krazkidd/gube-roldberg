@@ -19,6 +19,7 @@ package parts;
 
 import java.awt.Polygon;
 import java.awt.Shape;
+import java.awt.geom.Path2D;
 
 import engine.Vector;
 
@@ -74,17 +75,24 @@ public class Wall extends Part {
 		super(pos);
 		this.type = aType;
 		
-		this.shape = new Polygon();
-		Polygon p = (Polygon) this.shape;
+		this.shape = new Path2D.Double();
+		Path2D.Double p = (Path2D.Double) this.shape;
+		
 		
 		Vector lowerLeft = new Vector(getPosition().getX(), getPosition().getY() + getHeight());
 		Vector lowerRight = new Vector(getPosition().getX() + getWidth(), getPosition().getY() + getHeight());
 		Vector upperRight = new Vector(getPosition().getX() + getWidth(), getPosition().getY());
 
-		p.addPoint((int) getPosition().getX(), (int) getPosition().getY());
-		p.addPoint((int) lowerLeft.getX(), (int) lowerLeft.getY());
-		p.addPoint((int) lowerRight.getX(), (int) lowerRight.getY());
-		p.addPoint((int) upperRight.getX(), (int) upperRight.getY());
+		// TODO use Path2D methods to draw polygon
+		//p.((int) getPosition().getX(), (int) getPosition().getY());
+		//p.addPoint((int) lowerLeft.getX(), (int) lowerLeft.getY());
+		//p.addPoint((int) lowerRight.getX(), (int) lowerRight.getY());
+		//p.addPoint((int) upperRight.getX(), (int) upperRight.getY());
+		p.moveTo(pos.getX(), pos.getY());
+		p.lineTo(upperRight.getX(), upperRight.getY());
+		p.lineTo(lowerRight.getX(), lowerRight.getY());
+		p.lineTo(lowerLeft.getX(), lowerLeft.getY());
+		p.closePath();
 	}
 
 	@Override

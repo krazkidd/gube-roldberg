@@ -87,7 +87,7 @@ public class MainFrame extends JFrame {
 		setLayout(new BorderLayout());
 		//setDefaultCloseOperation(DISPOSE_ON_CLOSE);// already the default op
 		setPreferredSize(new Dimension(1024, 768));
-		setTitle("Rube Goldberg v2.0");
+		setTitle("Gube Roldberg");
 
 		// create menu bar and top level menu items
 		menuBar = new JMenuBar();
@@ -156,6 +156,7 @@ public class MainFrame extends JFrame {
 	private class mnuExitListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
+			worldPanel.deactivateWorld();
 			dispose();
 		}
 	}

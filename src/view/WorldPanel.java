@@ -24,7 +24,10 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -86,7 +89,7 @@ import exceptions.PartCreationException;
 ||                  + loadParts(String) : void
 ||
 ++-----------------------------------------------------------------------*/
-public class WorldPanel extends JPanel implements Runnable, Serializable {
+public class WorldPanel extends JPanel implements Runnable {
 	
 	// attributes ///////////////////////////////////////////
 
@@ -111,6 +114,10 @@ public class WorldPanel extends JPanel implements Runnable, Serializable {
 	 * A reference to the status panel so that messages can be displayed.
 	 */
 	private StatusPanel statusPanel;
+	
+	private Point2D.Double worldCenter;
+	
+	private double zoomLevel;
 
 	
 	// constructors /////////////////////////////////////////
@@ -138,6 +145,9 @@ public class WorldPanel extends JPanel implements Runnable, Serializable {
 		MouseListener ml = new MouseEventListener();
 		addMouseListener(ml);
 		addMouseMotionListener((MouseMotionListener) ml);
+		addMouseWheelListener((MouseWheelListener) ml);
+		worldCenter = new Point2D.Double(0.0, 0.0);
+		zoomLevel = 100.0;
 	}
 
 	
@@ -172,15 +182,27 @@ public class WorldPanel extends JPanel implements Runnable, Serializable {
 		// cast the Graphics object to Graphics2D so we can draw 2D objects more
 		// easily
 		Graphics2D g2 = (Graphics2D) g;
-
+		
+		// put origin in center of window
+		g2.translate(this.getWidth() / 2, this.getHeight() / 2);
+		
 		// apply transformations to flip y-axis (normally, positive y goes down)
 		g2.transform(new AffineTransform(1.0, 0.0, 0.0, -1.0, 0.0, 0.0));
+				
+		// zoom in
+		//g2.transform(new AffineTransform(10.0, 0.0, 0.0, 10.0, 0.0, 0.0));
+		g2.scale(zoomLevel, zoomLevel);
 
 		// draw all the parts
 		for (Part p : parts) {
 			g2.setColor(p.getPartType().getColor());
 			g2.fill(p.getShape());
 		}
+		
+		// draw debug lines
+		//g2.drawLine(-1000, 0, 1000, 0);
+		//g2.drawLine(0, -1000, 0, 1000);
+		//g2.drawRect(10, 10, 20, 20);
 	}	
 
     /*---------------------------------------------------------------------
@@ -213,7 +235,7 @@ public class WorldPanel extends JPanel implements Runnable, Serializable {
 				partsToUpdate.add((Updateable) p);
 		}
 	
-		Vector gravity = new Vector(0.0, -980);
+		Vector gravity = new Vector(0.0, -9.80);
 		
 		long currTime = System.nanoTime();
 		long prevTime = currTime;
@@ -221,19 +243,19 @@ public class WorldPanel extends JPanel implements Runnable, Serializable {
 		// start update loop
 		while (isRunning) {
 			// update position of movable objects
-			currTime = System.nanoTime();
+			//currTime = System.nanoTime();
 			//Core.updatePhysicsObjects(parts, partsToUpdate, 100.0, gravity);
-			Core.updatePhysicsObjects(parts, partsToUpdate, 0.001, gravity);
+			Core.updatePhysicsObjects(parts, partsToUpdate, 0.01, gravity);
  			
-			System.out.println((currTime - prevTime) / 1000000000.0);
+			//System.out.println((currTime - prevTime) / 1000000000.0);
 		
 			repaint();
 			prevTime = currTime;
 			try{   
-				Thread.sleep(5);//sleep for 20 ms    
-				} 
+				Thread.sleep(10);//sleep for 1 ms    
+			} 
 				catch(InterruptedException ie){ 
-				}
+			}
 		}
 
 		// restore the saved parts list
@@ -419,7 +441,7 @@ public class WorldPanel extends JPanel implements Runnable, Serializable {
 	 ||                  + mouseMoved(MouseEvent)
 	 ||
 	 ++-----------------------------------------------------------------------*/
-	private class MouseEventListener implements MouseListener, MouseMotionListener {
+	private class MouseEventListener implements MouseListener, MouseMotionListener, MouseWheelListener {
 
 		/**
 		 * current selected part type reference
@@ -428,7 +450,7 @@ public class WorldPanel extends JPanel implements Runnable, Serializable {
 		/**
 		 * reference to the point that was clicked
 		 */
-		private Point mouseLocation;
+		private Point2D.Double mouseLocation;
 
 		/*---------------------------------------------------------------------
 	    |  Method MouseEventListener (constructor)
@@ -446,7 +468,7 @@ public class WorldPanel extends JPanel implements Runnable, Serializable {
 	    *-------------------------------------------------------------------*/
 		public MouseEventListener() {
 			this.partTypeSelected = null;
-			this.mouseLocation = null;
+			this.mouseLocation = new Point2D.Double();
 		}
 
 		/*---------------------------------------------------------------------
@@ -471,12 +493,14 @@ public class WorldPanel extends JPanel implements Runnable, Serializable {
 		public void mousePressed(MouseEvent mse) {
 			// if game is not running
 			if (!isRunning) {
-				mouseLocation = new Point((int) mse.getPoint().getX(), (int) mse.getPoint().getY() * -1); // y * -1 because y-axis is flipped
+				mouseLocation.setLocation((mse.getPoint().getX() - getWidth() / 2.0) / zoomLevel, ((mse.getPoint().getY() * -1 + getHeight() / 2.0)) / zoomLevel); 
 				partTypeSelected = partsPanel.getCurrentlySelectedPart();
 				
 				// on a left click, do this
 				if (mse.getButton() == MouseEvent.BUTTON1) // TODO change to use &
 					leftPress();
+				if (mse.getButton() == MouseEvent.MOUSE_WHEEL)
+					System.out.println("mousewheel scrolled");
 			}
 		}
 
@@ -500,7 +524,11 @@ public class WorldPanel extends JPanel implements Runnable, Serializable {
 		public void mouseDragged(MouseEvent mse) {
 			// if game is not running
 			if (!isRunning) {
-				mouseLocation = new Point((int) mse.getPoint().getX(), (int) mse.getPoint().getY() * -1); // y * -1 because y-axis is flipped
+				mouseLocation.setLocation((mse.getPoint().getX() - getWidth() / 2.0) / zoomLevel, ((mse.getPoint().getY() * -1 + getHeight() / 2.0)) / zoomLevel);
+				
+				System.out.println("Mouse location: x=" + mse.getX() + ", y=" + mse.getY());
+				System.out.println("Transformed location: x=" + mouseLocation.getX() + ", y= " + mouseLocation.getY());
+				
 				partTypeSelected = partsPanel.getCurrentlySelectedPart();
 				
 				// on a left click, do this
@@ -514,6 +542,16 @@ public class WorldPanel extends JPanel implements Runnable, Serializable {
 
 		@Override
 		public void mouseMoved(MouseEvent arg0) {
+		}
+		
+
+		@Override
+		public void mouseWheelMoved(MouseWheelEvent mse) {
+			System.out.println("mousewheel rotated");
+			zoomLevel += mse.getWheelRotation() * -10;
+			if (zoomLevel < 10)
+				zoomLevel = 10;
+			repaint();
 		}
 
 		/*---------------------------------------------------------------------
@@ -539,6 +577,7 @@ public class WorldPanel extends JPanel implements Runnable, Serializable {
 			
 			if (partTypeSelected != null) {
 				try {
+					System.out.println("Creating part at location: x=" + mouseLocation.getX() + ", y=" + mouseLocation.getY());
 					toCreate = PartFactory.getPart(partTypeSelected, mouseLocation);
 					
 					if (!collisionOnPlace(toCreate)) {

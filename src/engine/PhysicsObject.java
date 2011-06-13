@@ -21,7 +21,7 @@ import java.awt.Shape;
 import java.io.Serializable;
 
 /**
- * A <code>PhysicsObject</code> is the tangible component of the physics engine.
+ * A <code>PhysicsObject</code> is a primitive component of the physics engine.
  * It has properties 
  * 
  * @author Mark Ross

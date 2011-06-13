@@ -18,6 +18,7 @@
 package parts;
 
 import java.awt.Point;
+import java.awt.geom.Point2D;
 
 import engine.Vector;
 import exceptions.PartCreationException;
@@ -78,7 +79,7 @@ public class PartFactory {
 	 * @return a reference to the newly created <code>Part</code>.
 	 * @throws PartCreationException 
 	 */
-	public static Part getPart(PartType type, Point point) throws PartCreationException {
+	public static Part getPart(PartType type, Point2D.Double point) throws PartCreationException {
 		Part toReturn = null;
 		// set the position vector of the new part so that the center of the part is where the
 		// cursor was upon the click
@@ -148,7 +149,8 @@ public class PartFactory {
 		 case PULLEY:
 			toReturn = new Pulley(aPoint);
 			break;
-*/					
+*/	
+				
 		 case RAMPLEFTFACE:
 			toReturn = new Ramp(aPoint, PartType.RAMPLEFTFACE);
 			break;
@@ -156,6 +158,7 @@ public class PartFactory {
 		 case RAMPRIGHTFACE:
 				toReturn = new Ramp(aPoint, PartType.RAMPRIGHTFACE);
 				break;
+				
 /*				
 		 case RODENTMOTOROFF:
 			toReturn = new RodentMotor(aPoint);

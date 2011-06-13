@@ -111,10 +111,13 @@ public class ToolbarPanel extends JPanel {
 		this.clearIcon = new ImageIcon("resources/images/other/clear.png");		
 
 		// Create Buttons
-		this.runButton = new JButton(runIcon);
+		//this.runButton = new JButton(runIcon);
+		this.runButton = new JButton("Run");
 		this.tempSaveButton = new JButton("Temp Save");
-		this.resetButton = new JButton(resetIcon);
-		this.clearPartsButton = new JButton(clearIcon);
+		//this.resetButton = new JButton(resetIcon);
+		this.resetButton = new JButton("Reset");
+		//this.clearPartsButton = new JButton(clearIcon);
+		this.clearPartsButton = new JButton("Clear");
 
 		// set preferred size
 		this.runButton.setPreferredSize(new Dimension(40, 30));
@@ -145,14 +148,16 @@ public class ToolbarPanel extends JPanel {
 	// behaviors ////////////////////////////////////////////
 
 	private void setButtonsOnPause() {
-		runButton.setIcon(runIcon);
+		//runButton.setIcon(runIcon);
+		runButton.setText("Run");
 		tempSaveButton.setEnabled(true);
 		resetButton.setEnabled(true);
 		clearPartsButton.setEnabled(true);
 	}
 
 	private void setButtonsOnRun() {
-		runButton.setIcon(pauseIcon);
+		//runButton.setIcon(pauseIcon);
+		runButton.setText("Pause");
 		tempSaveButton.setEnabled(false);
 		resetButton.setEnabled(false);
 		clearPartsButton.setEnabled(false);

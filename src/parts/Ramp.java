@@ -19,6 +19,7 @@ package parts;
 
 import java.awt.Polygon;
 import java.awt.Shape;
+import java.awt.geom.Path2D;
 
 import engine.Vector;
 
@@ -83,21 +84,21 @@ public class Ramp extends Part {
 	 */
 	public Ramp(Vector pos, PartType whichFace) {
 		super(pos);
-		
+		// FIXME
 		this.type = whichFace;
 
 		if (this.type == PartType.RAMPRIGHTFACE) {
-			rampFaceVectorBeginPos = new Vector(100.0, 0.0);
-			rampLongFaceVector = new Vector(-100.0, 59.0);
-			rampShortFaceVector = new Vector(0.0, 15.0);
+			rampFaceVectorBeginPos = new Vector(1.00, 0.0); // TODO change these numbers to not be hard-coded; they need to be based on the size given in the enum
+			rampLongFaceVector = new Vector(-1.00, 0.59);
+			rampShortFaceVector = new Vector(0.0, 0.15);
 		} else {
 			rampFaceVectorBeginPos = new Vector(0.0, 0.0);
-			rampLongFaceVector = new Vector(100.0, 59.0);
-			rampShortFaceVector = new Vector(0.0, 15.0);
+			rampLongFaceVector = new Vector(1.00, 0.59);
+			rampShortFaceVector = new Vector(0.0, 0.15);
 		}
 		
-		this.shape = new Polygon();
-		Polygon p = (Polygon) this.shape;
+		this.shape = new Path2D.Double();
+		Path2D.Double p = (Path2D.Double) this.shape;
 		
 		if (getPartType() == PartType.RAMPRIGHTFACE) {
 			Vector upperRight = getRampFaceVectorBeginPos();
@@ -105,21 +106,24 @@ public class Ramp extends Part {
 			Vector lowerLeft = Vector.add(upperLeft, getRampShortFaceVector());
 			Vector lowerRight = Vector.add(lowerLeft, new Vector(getRampLongFaceVector().getX() * -1, getRampLongFaceVector().getY() * -1));
 
-			p.addPoint((int) upperRight.getX(), (int) upperRight.getY());
-			p.addPoint((int) upperLeft.getX(), (int) upperLeft.getY());
-			p.addPoint((int) lowerLeft.getX(), (int) lowerLeft.getY());
-			p.addPoint((int) lowerRight.getX(), (int) lowerRight.getY());
+			p.moveTo((int) upperRight.getX(), (int) upperRight.getY());
+			p.lineTo((int) upperLeft.getX(), (int) upperLeft.getY());
+			p.lineTo((int) lowerLeft.getX(), (int) lowerLeft.getY());
+			p.lineTo((int) lowerRight.getX(), (int) lowerRight.getY());
+			p.closePath();
 		} else {
 			Vector upperLeft = getRampFaceVectorBeginPos();
 			Vector lowerLeft = Vector.add(upperLeft, getRampShortFaceVector());
 			Vector lowerRight = Vector.add(lowerLeft, getRampLongFaceVector());
 			Vector upperRight = Vector.add(lowerRight, new Vector(getRampShortFaceVector().getX() * -1, getRampShortFaceVector().getY() * -1));
 
-			p.addPoint((int) upperLeft.getX(), (int) upperLeft.getY());
-			p.addPoint((int) lowerLeft.getX(), (int) lowerLeft.getY());
-			p.addPoint((int) lowerRight.getX(), (int) lowerRight.getY());
-			p.addPoint((int) upperRight.getX(), (int) upperRight.getY());
+			p.moveTo((int) upperLeft.getX(), (int) upperLeft.getY());
+			p.lineTo((int) lowerLeft.getX(), (int) lowerLeft.getY());
+			p.lineTo((int) lowerRight.getX(), (int) lowerRight.getY());
+			p.lineTo((int) upperRight.getX(), (int) upperRight.getY());
+			p.closePath();
 		}
+		
 	}
 
 	/**

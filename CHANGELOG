@@ -1,3 +1,7 @@
+17.07.2011
+	- Ramps are somewhat fixed now. They aren't created centered on the mouse and
+	  the collisions are working weirdly.
+
 17.06.2011
 	- Polygon collisions were fixed.
 	- Ramps are not being created correctly; they are spawned with weird dimensions.

@@ -1,6 +1,18 @@
+17.06.2011
+	- Polygon collisions were fixed.
+	- Ramps are not being created correctly; they are spawned with weird dimensions.
+	- Circle-Circle collisions work great, but when there are Polygons, sometimes
+	  all the Parts just disappear (NaN position)
+
+13.06.2011
+	- All collisions now use one of two possible CollisionResult objects. This saves
+	  a lot of time by not having to create and destroy them every time through the
+	  update loop.
+
 10.06.2011
 	- Changed user space significantly. Parts now use dimensions in meters instead
 	  of pixels. The world is now zoomable. 
+	- Timestep made to be static. I suppose this could be changeable by the user.
 
 25.02.2011 v2.0.1
 	- Modified Updateable on Updateable collisions so that they are inelastic instead

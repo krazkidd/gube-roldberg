@@ -20,6 +20,7 @@ package parts;
 import java.awt.Polygon;
 import java.awt.Shape;
 import java.awt.geom.Path2D;
+import java.awt.geom.PathIterator;
 
 import engine.Vector;
 
@@ -93,6 +94,36 @@ public class Wall extends Part {
 		p.lineTo(lowerRight.getX(), lowerRight.getY());
 		p.lineTo(lowerLeft.getX(), lowerLeft.getY());
 		p.closePath();
+		
+		
+		// TODO remove below
+		PathIterator pi = p.getPathIterator(null);
+		
+		System.out.println("PRINTING RAMP WALL SEGMENTS");
+		double[] points = new double[6];
+		
+		while (!pi.isDone()) {
+			
+			switch (pi.currentSegment(points)) {
+				case PathIterator.SEG_MOVETO:
+					System.out.print("Move to: ");
+					break;
+				case PathIterator.SEG_LINETO:
+					System.out.print("Line to: ");
+					break;
+				case PathIterator.SEG_CLOSE:
+					System.out.print("Close: ");
+					break;
+			}
+			
+			for (double d : points) {
+				System.out.print(d + ", ");
+			}
+			
+			System.out.println();
+			
+			pi.next();
+		}
 	}
 
 	@Override

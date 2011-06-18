@@ -77,11 +77,25 @@ public class Utility {
 	 *            1 <= i <= # of vertices
 	 * @return a <code>Vector</code> representing the edge
 	 */
-	public static Vector getEdge(Polygon polyA, int i) {
-		if (i < polyA.npoints)
-			return new Vector(polyA.xpoints[i] - polyA.xpoints[i - 1], polyA.ypoints[i] - polyA.ypoints[i - 1]);
-		else
-			return new Vector(polyA.xpoints[0] - polyA.xpoints[i - 1], polyA.ypoints[0] - polyA.ypoints[i - 1]);
+	public static void getEdge(Vector edge, double[][] polyPoints, int i) {
+		switch (i) {
+			case 0:
+				edge.setX(polyPoints[1][0] - polyPoints[0][0]);
+				edge.setY(polyPoints[1][1] - polyPoints[0][1]);
+				break;
+			case 1:
+				edge.setX(polyPoints[2][0] - polyPoints[1][0]);
+				edge.setY(polyPoints[2][1] - polyPoints[1][1]);
+				break;
+			case 2:
+				edge.setX(polyPoints[3][0] - polyPoints[2][0]);
+				edge.setY(polyPoints[3][1] - polyPoints[2][1]);
+				break;
+			case 3:
+				edge.setX(polyPoints[0][0] - polyPoints[3][0]);
+				edge.setY(polyPoints[0][1] - polyPoints[3][1]);
+				break;
+		}
 	}
 
 	/**

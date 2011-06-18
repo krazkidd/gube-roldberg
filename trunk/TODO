@@ -1,7 +1,10 @@
 This file records TODOs that have to do with the big picture, the general
 direction of the project. There are some more TODOs in the code.
 
-
+* allow adding gravitational points or objects
+* allow giving parts initial velocity vectors
+  - be able to select a group of parts at a single time
+* randomly select the first part to update so that some behaviors get averaged out. 
 * make all parts Updateable and get rid of instanceof? (I think the performance
 	hit would be greater than the gain.)
 * need to pass air density to physics engine for air resistance calcs.
@@ -9,7 +12,6 @@ direction of the project. There are some more TODOs in the code.
 * how to take advantage of multiple cores? (is there a library?)
 * rename Updateable -> Mobile (or Moveable)
 * need to add status panel so messages show
-* sometimes, every object just disappears...(pos = NaN?)
 * customizeable mouse/keys
 * remove printStackTrace's. give better error messages
 * is the Factory pattern very useful [in PartFactory]? or is there a better way to implement it
@@ -26,6 +28,7 @@ direction of the project. There are some more TODOs in the code.
 * NaN happens very often w/ baseballs and slimeballs. i think they overlap the same type
 	at some point and this causes a division by zero. (NaN also happens w/ basketballs and bowling balls)
 	- this is happening much less now for some reason...
+	- this is happening again; it occurs when there are Polygons (Circle-Polygon) collisions
 * fix circleWithRectangle collision (balls and corners don't work correctly)
 * share user-created parts: the parts just need to define a (convex) shape! and any
 	special physics and colors

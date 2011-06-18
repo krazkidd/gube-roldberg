@@ -19,6 +19,8 @@ package engine;
 
 import java.awt.Polygon;
 import java.awt.Shape;
+import java.awt.geom.PathIterator;
+import java.awt.geom.Point2D;
 
 /*+----------------------------------------------------------------------
 ||
@@ -67,6 +69,8 @@ public class Collisions {
 	 * for object re-use!! (Which design pattern is this??)
 	 */
 	private static CollisionResult noCollisionDetected = new CollisionResult();
+	
+	private static CollisionResult collisionDetected = new CollisionResult();
 	
 	// behaviors ////////////////////////////////////////////
 
@@ -225,7 +229,7 @@ public class Collisions {
 	 * @return
 	 */
 	private static CollisionResult checkCircleWithCircle(PhysicsObject a, PhysicsObject b) {
-		CollisionResult result = new CollisionResult();
+		//CollisionResult result = new CollisionResult();
 
 		// use arrays so we can pass them by *reference*
 		double[] maxMinA = { 0.0, 0.0 };
@@ -252,10 +256,10 @@ public class Collisions {
 		if (Vector.dotProduct(d, translationAxis) < 0)
 			translationAxis = new Vector(translationAxis.getX() * -1, translationAxis.getY() * -1);
 
-		result.setProjectionVector(new Vector(translationAxis.getX() * intervalDistance, translationAxis.getY() * intervalDistance));
+		collisionDetected.setProjectionVector(new Vector(translationAxis.getX() * intervalDistance, translationAxis.getY() * intervalDistance));
 
-		result.setCollisionOccurred(true);
-		return result;
+		collisionDetected.setCollisionOccurred(true);
+		return collisionDetected;
 	}
 
 	/**
@@ -340,7 +344,7 @@ public class Collisions {
 	 * @return
 	 */
 	private static CollisionResult checkCircleWithPolygon(PhysicsObject a, PhysicsObject b) {
-		CollisionResult result = new CollisionResult(); // TODO is it possible to modify these methods so this can be placed after the early exit in the for loop?
+		//CollisionResult result = new CollisionResult(); // TODO is it possible to modify these methods so this can be placed after the early exit in the for loop?
 
 		// make sure circle is within rectangular bounds of polygon first. Exit
 		// early if not.
@@ -350,22 +354,27 @@ public class Collisions {
 		double[] maxMinA = { 0.0, 0.0 };
 		double[] maxMinB = { 0.0, 0.0 };
 
-		Shape shapeB = (Shape) b.getShape();
+		//Shape shapeB = (Shape) b.getShape();
+		PathIterator pi = b.getShape().getPathIterator(null);
+		double[][] polyPoints = new double[4][6]; // four vertices, and PathIterator.currentSegment() needs an array of size 6
 		
-		//TODO must use PathIterator instead of Polygon
-
+		for (int i = 0; i <= 3; i++) {
+			pi.currentSegment(polyPoints[i]);
+			pi.next();
+		}
+		
 		double minIntervalDistance = Double.MAX_VALUE;
 		Vector translationAxis = new Vector();
-		Vector edge;
+		Vector edge = new Vector();
 
-		for (int i = 1; i <= polyB.npoints; i++) {
-			edge = Utility.getEdge(polyB, i);
+		for (int i = 0; i <= 3; i++) {
+			Utility.getEdge(edge, polyPoints, i);
 			// get the axis perpendicular to the edge of the polygon
 			Vector axis = edge.getRightHandNormal().getNormalized();
 
 			// project the shapes onto the axis
 			projectCircle(axis, a.getCenter(), a.getWidth() / 2, maxMinA);
-			projectPolygon(axis, polyB, maxMinB);
+			projectPolygon(axis, polyPoints, maxMinB);
 
 			double intervalDistance = getIntervalDistance(maxMinA, maxMinB);
 
@@ -385,14 +394,14 @@ public class Collisions {
 				if (Vector.dotProduct(d, translationAxis) < 0)
 					translationAxis = new Vector(translationAxis.getX() * -1, translationAxis.getY() * -1);
 
-				result.setProjectionVector(new Vector(translationAxis.getX() * minIntervalDistance, translationAxis.getY() * minIntervalDistance));
+				collisionDetected.setProjectionVector(new Vector(translationAxis.getX() * minIntervalDistance, translationAxis.getY() * minIntervalDistance));
 			}
 		}
 
 		// edges checked in last loop, now check vertices?!?!?!
 
-		result.setCollisionOccurred(true);
-		return result;
+		collisionDetected.setCollisionOccurred(true);
+		return collisionDetected;
 	}
 
 	/**
@@ -401,28 +410,41 @@ public class Collisions {
 	 * @return
 	 */
 	private static CollisionResult checkPolygonWithPolygon(PhysicsObject a, PhysicsObject b) {
-		CollisionResult result = new CollisionResult();
+		//CollisionResult result = new CollisionResult();
 		
 		double[] maxMinA = { 0.0, 0.0 };
 		double[] maxMinB = { 0.0, 0.0 };
 
-		Polygon polyA = (Polygon) a.getShape();
-		Polygon polyB = (Polygon) b.getShape();
-
+		PathIterator piA = a.getShape().getPathIterator(null);
+		double[][] polyPointsA = new double[4][6]; // four vertices, and PathIterator.currentSegment() needs an array of size 6
+		
+		for (int i = 0; i <= 3; i++) {
+			piA.currentSegment(polyPointsA[i]);
+			piA.next();
+		}
+		
+		PathIterator piB = b.getShape().getPathIterator(null);
+		double[][] polyPointsB = new double[4][6]; // four vertices, and PathIterator.currentSegment() needs an array of size 6
+		
+		for (int i = 0; i <= 3; i++) {
+			piB.currentSegment(polyPointsB[i]);
+			piB.next();
+		}
+		
 		double minIntervalDistance = Double.MAX_VALUE;
 		Vector translationAxis = new Vector();
-		Vector edge;
+		Vector edge = new Vector();
 
 		// check all edges of both polygons, find the shortest projection
-		// (translation)
-		for (int i = 1; i <= polyA.npoints; i++) {
-			edge = Utility.getEdge(polyA, i);
+		// (translation)		
+		for (int i = 0; i <= 3; i++) {
+			Utility.getEdge(edge, polyPointsA, i);
 			// get the axis perpendicular to the edge of the polygon
 			Vector axis = edge.getRightHandNormal().getNormalized();
 
-			// project the polygons onto the axis
-			projectPolygon(axis, polyA, maxMinA);
-			projectPolygon(axis, polyB, maxMinB);
+			// project the shapes onto the axis
+			projectPolygon(axis, polyPointsA, maxMinA);
+			projectPolygon(axis, polyPointsB, maxMinB);
 
 			double intervalDistance = getIntervalDistance(maxMinA, maxMinB);
 
@@ -442,18 +464,18 @@ public class Collisions {
 				if (Vector.dotProduct(d, translationAxis) < 0)
 					translationAxis = new Vector(translationAxis.getX() * -1, translationAxis.getY() * -1);
 
-				result.setProjectionVector(new Vector(translationAxis.getX() * minIntervalDistance, translationAxis.getY() * minIntervalDistance));
+				collisionDetected.setProjectionVector(new Vector(translationAxis.getX() * minIntervalDistance, translationAxis.getY() * minIntervalDistance));
 			}
 		}
 
-		for (int i = 1; i <= polyB.npoints; i++) {
-			edge = Utility.getEdge(polyB, i);
+		for (int i = 0; i <= 3; i++) {
+			Utility.getEdge(edge, polyPointsB, i);
 			// get the axis perpendicular to the edge of the polygon
 			Vector axis = edge.getRightHandNormal().getNormalized();
 
-			// project the polygons onto the axis
-			projectPolygon(axis, polyA, maxMinA);
-			projectPolygon(axis, polyB, maxMinB);
+			// project the shapes onto the axis
+			projectPolygon(axis, polyPointsA, maxMinA);
+			projectPolygon(axis, polyPointsB, maxMinB);
 
 			double intervalDistance = getIntervalDistance(maxMinA, maxMinB);
 
@@ -474,12 +496,12 @@ public class Collisions {
 				if (Vector.dotProduct(d, translationAxis) < 0)
 					translationAxis = new Vector(translationAxis.getX() * -1, translationAxis.getY() * -1);
 
-				result.setProjectionVector(new Vector(translationAxis.getX() * minIntervalDistance, translationAxis.getY() * minIntervalDistance));
+				collisionDetected.setProjectionVector(new Vector(translationAxis.getX() * minIntervalDistance, translationAxis.getY() * minIntervalDistance));
 			}
 		}
 
-		result.setCollisionOccurred(true);
-		return result;
+		collisionDetected.setCollisionOccurred(true);
+		return collisionDetected;
 	}
 
 	/**
@@ -516,15 +538,15 @@ public class Collisions {
 			maxMin[0] = d;
 	}
 
-	private static void projectPolygon(Vector axis, Polygon p, double[] maxMin) {
+	private static void projectPolygon(Vector axis, double[][] polyPoints, double[] maxMin) {
 		// use dot product to project a point onto the axis
-		double d = Vector.dotProduct(axis, new Vector(p.xpoints[0], p.ypoints[0]));
+		double d = Vector.dotProduct(axis, new Vector(polyPoints[0][0], polyPoints[0][1]));
 		maxMin[0] = d;
 		maxMin[1] = d;
 
 		// save the point if it is a max or min
-		for (int i = 1; i < p.npoints; i++) {
-			d = Vector.dotProduct(axis, new Vector(p.xpoints[i], p.ypoints[i]));
+		for (int i = 1; i <= 3; i++) {
+			d = Vector.dotProduct(axis, new Vector(polyPoints[i][0], polyPoints[i][1]));
 			if (d < maxMin[1])
 				maxMin[1] = d;
 			else if (d > maxMin[0])

@@ -107,10 +107,10 @@ public class Ramp extends Part {
 			Vector lowerRight = Vector.add(upperRight, getRampShortFaceVector());
 			Vector lowerLeft = Vector.add(lowerRight, new Vector(getRampLongFaceVector().getX() * -1, getRampLongFaceVector().getY() * -1));
 
-			p.moveTo((int) upperLeft.getX(), (int) upperLeft.getY());
-			p.lineTo((int) upperRight.getX(), (int) upperRight.getY());
-			p.lineTo((int) lowerRight.getX(), (int) lowerRight.getY());
-			p.lineTo((int) lowerLeft.getX(), (int) lowerLeft.getY());
+			p.moveTo(upperLeft.getX(), upperLeft.getY());
+			p.lineTo(upperRight.getX(), upperRight.getY());
+			p.lineTo(lowerRight.getX(), lowerRight.getY());
+			p.lineTo(lowerLeft.getX(), lowerLeft.getY());
 			p.closePath();
 		} else {
 			Vector upperLeft = getRampFaceVectorBeginPos();
@@ -118,10 +118,10 @@ public class Ramp extends Part {
 			Vector lowerRight = Vector.add(lowerLeft, getRampLongFaceVector());
 			Vector upperRight = Vector.add(lowerRight, new Vector(getRampShortFaceVector().getX() * -1, getRampShortFaceVector().getY() * -1));
 
-			p.moveTo((int) upperLeft.getX(), (int) upperLeft.getY());
-			p.lineTo((int) lowerLeft.getX(), (int) lowerLeft.getY());
-			p.lineTo((int) lowerRight.getX(), (int) lowerRight.getY());
-			p.lineTo((int) upperRight.getX(), (int) upperRight.getY());
+			p.moveTo(upperLeft.getX(), upperLeft.getY());
+			p.lineTo(lowerLeft.getX(), lowerLeft.getY());
+			p.lineTo(lowerRight.getX(), lowerRight.getY());
+			p.lineTo(upperRight.getX(), upperRight.getY());
 			p.closePath();
 		}
 		

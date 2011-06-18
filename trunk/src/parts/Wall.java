@@ -75,9 +75,8 @@ public class Wall extends Part {
 	public Wall(Vector pos, PartType aType) {
 		super(pos);
 		this.type = aType;
-		
-		this.shape = new Path2D.Double();
-		Path2D.Double p = (Path2D.Double) this.shape;
+	
+		Path2D.Double p = new Path2D.Double();
 		
 		
 		Vector lowerLeft = new Vector(getPosition().getX(), getPosition().getY() + getHeight());
@@ -95,6 +94,7 @@ public class Wall extends Part {
 		p.lineTo(lowerLeft.getX(), lowerLeft.getY());
 		p.closePath();
 		
+		this.shape = p;
 		
 		// TODO remove below
 		PathIterator pi = p.getPathIterator(null);
@@ -124,6 +124,8 @@ public class Wall extends Part {
 			
 			pi.next();
 		}
+		
+		
 	}
 
 	@Override

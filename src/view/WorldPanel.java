@@ -27,6 +27,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.PathIterator;
 import java.awt.geom.Point2D;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -584,6 +585,37 @@ public class WorldPanel extends JPanel implements Runnable {
 						if (parts.add(toCreate)) { // TODO check for NullPointerException? 
 							repaint();
 							statusPanel.setStatus("New " + toCreate.getPartType().toString() + " added!");
+							
+							// TODO remove this
+							if (toCreate.getPartType() == PartType.RAMPLEFTFACE || toCreate.getPartType() == PartType.RAMPRIGHTFACE) {
+								PathIterator pi = toCreate.getShape().getPathIterator(null);
+								
+								System.out.println("PRINTING RAMP PATH SEGMENTS");
+								double[] points = new double[6];
+								
+								while (!pi.isDone()) {
+									
+									switch (pi.currentSegment(points)) {
+										case PathIterator.SEG_MOVETO:
+											System.out.print("Move to: ");
+											break;
+										case PathIterator.SEG_LINETO:
+											System.out.print("Line to: ");
+											break;
+										case PathIterator.SEG_CLOSE:
+											System.out.print("Close: ");
+											break;
+									}
+									
+									for (double d : points) {
+										System.out.print(d + ", ");
+									}
+									
+									System.out.println();
+									
+									pi.next();
+								}
+							}
 						}
 					}
 					else 

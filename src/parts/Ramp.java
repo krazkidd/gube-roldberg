@@ -20,6 +20,7 @@ package parts;
 import java.awt.Polygon;
 import java.awt.Shape;
 import java.awt.geom.Path2D;
+import java.awt.geom.PathIterator;
 
 import engine.Vector;
 
@@ -88,28 +89,28 @@ public class Ramp extends Part {
 		this.type = whichFace;
 
 		if (this.type == PartType.RAMPRIGHTFACE) {
-			rampFaceVectorBeginPos = new Vector(1.00, 0.0); // TODO change these numbers to not be hard-coded; they need to be based on the size given in the enum
-			rampLongFaceVector = new Vector(-1.00, 0.59);
+			rampFaceVectorBeginPos = new Vector(0.0, 0.0); // TODO change these numbers to not be hard-coded; they need to be based on the size given in the enum
+			rampLongFaceVector = new Vector(1.00, -0.59);
 			rampShortFaceVector = new Vector(0.0, 0.15);
 		} else {
-			rampFaceVectorBeginPos = new Vector(0.0, 0.0);
-			rampLongFaceVector = new Vector(1.00, 0.59);
+			rampFaceVectorBeginPos = new Vector(0.0, 1.00);
+			rampLongFaceVector = new Vector(-1.00, -0.59);
 			rampShortFaceVector = new Vector(0.0, 0.15);
 		}
 		
-		this.shape = new Path2D.Double();
-		Path2D.Double p = (Path2D.Double) this.shape;
+		
+		Path2D.Double p = new Path2D.Double();
 		
 		if (getPartType() == PartType.RAMPRIGHTFACE) {
-			Vector upperRight = getRampFaceVectorBeginPos();
-			Vector upperLeft = Vector.add(upperRight, getRampLongFaceVector());
-			Vector lowerLeft = Vector.add(upperLeft, getRampShortFaceVector());
-			Vector lowerRight = Vector.add(lowerLeft, new Vector(getRampLongFaceVector().getX() * -1, getRampLongFaceVector().getY() * -1));
+			Vector upperLeft = getRampFaceVectorBeginPos();
+			Vector upperRight = Vector.add(upperLeft, getRampLongFaceVector());
+			Vector lowerRight = Vector.add(upperRight, getRampShortFaceVector());
+			Vector lowerLeft = Vector.add(lowerRight, new Vector(getRampLongFaceVector().getX() * -1, getRampLongFaceVector().getY() * -1));
 
-			p.moveTo((int) upperRight.getX(), (int) upperRight.getY());
-			p.lineTo((int) upperLeft.getX(), (int) upperLeft.getY());
-			p.lineTo((int) lowerLeft.getX(), (int) lowerLeft.getY());
+			p.moveTo((int) upperLeft.getX(), (int) upperLeft.getY());
+			p.lineTo((int) upperRight.getX(), (int) upperRight.getY());
 			p.lineTo((int) lowerRight.getX(), (int) lowerRight.getY());
+			p.lineTo((int) lowerLeft.getX(), (int) lowerLeft.getY());
 			p.closePath();
 		} else {
 			Vector upperLeft = getRampFaceVectorBeginPos();
@@ -124,6 +125,35 @@ public class Ramp extends Part {
 			p.closePath();
 		}
 		
+		this.shape = p;
+		
+		PathIterator pi = p.getPathIterator(null);
+		
+		System.out.println("PRINTING RAMP PATH SEGMENTS");
+		double[] points = new double[6];
+		
+		while (!pi.isDone()) {
+			
+			switch (pi.currentSegment(points)) {
+				case PathIterator.SEG_MOVETO:
+					System.out.print("Move to: ");
+					break;
+				case PathIterator.SEG_LINETO:
+					System.out.print("Line to: ");
+					break;
+				case PathIterator.SEG_CLOSE:
+					System.out.print("Close: ");
+					break;
+			}
+			
+			for (double d : points) {
+				System.out.print(d + ", ");
+			}
+			
+			System.out.println();
+			
+			pi.next();
+		}
 	}
 
 	/**

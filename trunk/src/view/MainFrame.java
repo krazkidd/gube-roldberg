@@ -1,5 +1,6 @@
 /* 
  * Copyright 2008 Mark Ross and Duncan Krassikoff
+ * Copyright 2011 Mark Ross
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,24 +30,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-/*=============================================================================
-|   Prog. Name:  Rube Goldberg
-|      Authors:  Mark Ross
-|                Duncan Krassikoff
-|
-|       Grader:  [Your TA or Section Leader's name]
-|
-|       Course:  [Course Number]
-|   Instructor:  L. McCann
-|     Due Date:  [Due Date and Time]
-|
-|  Description:  The entry point for the Rube Goldberg game. This class creates and displays
-|                all visual aspects of the program. TODO MOAR
-|                
-| Deficiencies:  [If you know of any problems with the code, provide
-|                details here, otherwise clearly state that you know
-|                of no unsatisfied requirements and no logic errors.]
-*===========================================================================*/
 public class MainFrame extends JFrame {
 	
 	// attributes ///////////////////////////////////////////
@@ -83,6 +66,7 @@ public class MainFrame extends JFrame {
 	 * Creates a new MainFrame which is a Rube Goldberg game.
 	 */
 	public MainFrame() {
+		
 		// set window properties
 		setLayout(new BorderLayout());
 		//setDefaultCloseOperation(DISPOSE_ON_CLOSE);// already the default op

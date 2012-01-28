@@ -1,5 +1,6 @@
 /* 
  * Copyright 2008 Mark Ross and Duncan Krassikoff
+ * Copyright 2011 Mark Ross
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

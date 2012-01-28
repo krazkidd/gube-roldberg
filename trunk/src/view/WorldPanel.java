@@ -1,5 +1,6 @@
 /* 
  * Copyright 2008 Mark Ross and Duncan Krassikoff
+ * Copyright 2011 Mark Ross
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -270,12 +271,9 @@ public class WorldPanel extends JPanel implements Runnable {
     |  Purpose:  Sets this WorldPanel in motion by creating a new thread,
     |            which then calls run().
     |
-    |  Pre-condition:  [Any non-obvious conditions that must exist
-    |      or be true before we can expect this method to function
-    |      correctly.]
+    |  Pre-condition:  
     |
-    |  Post-condition: [What we can expect to exist or be true after
-    |      this method has executed under the pre-condition(s).]
+    |  Post-condition: 
     |
     |  Parameters:
     |      None
@@ -293,12 +291,9 @@ public class WorldPanel extends JPanel implements Runnable {
     |
     |  Purpose:  Stops the update loop, pausing the world.
     |
-    |  Pre-condition:  [Any non-obvious conditions that must exist
-    |      or be true before we can expect this method to function
-    |      correctly.]
+    |  Pre-condition:  
     |
-    |  Post-condition: [What we can expect to exist or be true after
-    |      this method has executed under the pre-condition(s).]
+    |  Post-condition: 
     |
     |  Parameters:
     |      None
@@ -333,12 +328,9 @@ public class WorldPanel extends JPanel implements Runnable {
     |
     |  Purpose:  Clears all the parts from the world and forces a repaint.
     |
-    |  Pre-condition:  [Any non-obvious conditions that must exist
-    |      or be true before we can expect this method to function
-    |      correctly.]
+    |  Pre-condition:  
     |
-    |  Post-condition: [What we can expect to exist or be true after
-    |      this method has executed under the pre-condition(s).]
+    |  Post-condition: 
     |
     |  Parameters:
     |      None
@@ -356,12 +348,9 @@ public class WorldPanel extends JPanel implements Runnable {
     |
     |  Purpose:  Saves the list of parts to a file.
     |
-    |  Pre-condition:  [Any non-obvious conditions that must exist
-    |      or be true before we can expect this method to function
-    |      correctly.]
+    |  Pre-condition:  
     |
-    |  Post-condition: [What we can expect to exist or be true after
-    |      this method has executed under the pre-condition(s).]
+    |  Post-condition: 
     |
     |  Parameters:
     |      filename -- the absolute or relative location to save the file to
@@ -477,12 +466,9 @@ public class WorldPanel extends JPanel implements Runnable {
 	    |
 	    |  Purpose:  Handles any mouse clicks. TODO
 	    |
-	    |  Pre-condition:  [Any non-obvious conditions that must exist
-	    |      or be true before we can expect this method to function
-	    |      correctly.]
+	    |  Pre-condition:  
 	    |
-	    |  Post-condition: [What we can expect to exist or be true after
-	    |      this method has executed under the pre-condition(s).]
+	    |  Post-condition: 
 	    |
 	    |  Parameters:
 	    |      mse -- the MouseEvent given by Swing which contains information
@@ -561,12 +547,9 @@ public class WorldPanel extends JPanel implements Runnable {
 	    |  Purpose: Called when a regular Part is selected, and attempts to create that
 		|           part at the location clicked 
 	    |
-	    |  Pre-condition:  [Any non-obvious conditions that must exist
-	    |      or be true before we can expect this method to function
-	    |      correctly.]
+	    |  Pre-condition:  
 	    |
-	    |  Post-condition: [What we can expect to exist or be true after
-	    |      this method has executed under the pre-condition(s).]
+	    |  Post-condition: 
 	    |
 	    |  Parameters:
 	    |      None
@@ -633,12 +616,9 @@ public class WorldPanel extends JPanel implements Runnable {
 	    |  Purpose:  Tries to create a regular part when the user presses the 
 	    |            left mouse button.
 	    |
-	    |  Pre-condition:  [Any non-obvious conditions that must exist
-	    |      or be true before we can expect this method to function
-	    |      correctly.]
+	    |  Pre-condition:  
 	    |
-	    |  Post-condition: [What we can expect to exist or be true after
-	    |      this method has executed under the pre-condition(s).]
+	    |  Post-condition: 
 	    |
 	    |  Parameters:
 	    |      None
@@ -656,12 +636,9 @@ public class WorldPanel extends JPanel implements Runnable {
 	    |            in the world. This prevents the user from placing any parts on
 	    |            top of another.
 	    |
-	    |  Pre-condition:  [Any non-obvious conditions that must exist
-	    |      or be true before we can expect this method to function
-	    |      correctly.]
+	    |  Pre-condition:  
 	    |
-	    |  Post-condition: [What we can expect to exist or be true after
-	    |      this method has executed under the pre-condition(s).]
+	    |  Post-condition: 
 	    |
 	    |  Parameters:
 	    |      toCreate -- the part which intends to be placed in the world

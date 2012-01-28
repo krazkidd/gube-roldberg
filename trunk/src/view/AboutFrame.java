@@ -1,5 +1,6 @@
 /* 
  * Copyright 2008 Mark Ross and Duncan Krassikoff
+ * Copyright 2011 Mark Ross
  * 
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,34 +32,27 @@ import javax.swing.JTextArea;
 
 /*+----------------------------------------------------------------------
 ||
-||  Class [Class Name] 
+||  Class 
 ||
-||         Author:  [Your Name]
+||         Author:  
 ||
-||        Purpose:  [A description of why this class exists.  For what
-||                   reason was it written?  Which jobs does it perform?]
+||        Purpose:  
 ||
-||  Inherits From:  [If this class is a subclass of another, name it.
-||                   If not, just say "None."]
+||  Inherits From:  
 ||
-||     Interfaces:  [If any predefined interfaces are implemented by
-||                   this class, name them.  If not, ... well, you know.]
+||     Interfaces:  
 ||
 |+-----------------------------------------------------------------------
 ||
-||      Constants:  [Name all public class constants, and provide a very
-||                   brief (but useful!) description of each.]
+||      Constants:  
 ||
 |+-----------------------------------------------------------------------
 ||
-||   Constructors:  [List the names and arguments of all defined
-||                   constructors.]
+||   Constructors:  
 ||
-||  Class Methods:  [List the names, arguments, and return types of all
-||                   public class methods.]
+||  Class Methods:  
 ||
-||  Inst. Methods:  [List the names, arguments, and return types of all
-||                   public instance methods.]
+||  Inst. Methods:  
 ||
 ++-----------------------------------------------------------------------*/
 public class AboutFrame extends JFrame {
@@ -76,24 +70,16 @@ public class AboutFrame extends JFrame {
 	/*---------------------------------------------------------------------
 	|  Method AboutFrame (constructor)
 	|
-	|  Purpose:  [Explain what this method does to support the correct
-	|      operation of its class, and how it does it.]
+	|  Purpose:  
 	|
-	|  Pre-condition:  [Any non-obvious conditions that must exist
-	|      or be true before we can expect this method to function
-	|      correctly.]
+	|  Pre-condition:  
 	|
-	|  Post-condition: [What we can expect to exist or be true after
-	|      this method has executed under the pre-condition(s).]
+	|  Post-condition: 
 	|
 	|  Parameters:
-	|      parameter_name -- [Explanation of the purpose of this
-	|          parameter to the method.  Write one explanation for each
-	|          formal parameter of this method.]
+	|      
 	|
-	|  Returns:  [If this method sends back a value via the return
-	|      mechanism, describe the purpose of that value here, otherwise
-	|      state 'None.']
+	|  Returns:  
 	*-------------------------------------------------------------------*/
 	public AboutFrame() {
 		// icon
@@ -105,7 +91,7 @@ public class AboutFrame extends JFrame {
 		btnClose.addActionListener(new btnCloseListener());
 
 		// add stuff to panel
-		JTextArea txtAuthor = new JTextArea("Gube Roldberg\nCopyright 2008 Mark Ross and Duncan Krassikoff\nThis program comes with ABSOLUTELY NO WARRANTY.\nThis is free software, and you are welcome to redistribute it under certain conditions;\nsee COPYING for details.");
+		JTextArea txtAuthor = new JTextArea("Gube Roldberg\nCopyright 2008 Mark Ross and Duncan Krassikoff\nCopyright 2011 Mark Ross\nThis program comes with ABSOLUTELY NO WARRANTY.\nThis is free software, and you are welcome to redistribute it under certain conditions;\nsee COPYING for details.");
 		pnlIcon.add(txtAuthor, BorderLayout.CENTER);
 		pnlIcon.add(btnClose, BorderLayout.SOUTH);
 
@@ -123,34 +109,27 @@ public class AboutFrame extends JFrame {
 	
 	/*+----------------------------------------------------------------------
 	 ||
-	 ||  Class [Class Name] 
+	 ||  Class 
 	 ||
-	 ||         Author:  [Your Name]
+	 ||         Author:  
 	 ||
-	 ||        Purpose:  [A description of why this class exists.  For what
-	 ||                   reason was it written?  Which jobs does it perform?]
+	 ||        Purpose:  
 	 ||
-	 ||  Inherits From:  [If this class is a subclass of another, name it.
-	 ||                   If not, just say "None."]
+	 ||  Inherits From:  
 	 ||
-	 ||     Interfaces:  [If any predefined interfaces are implemented by
-	 ||                   this class, name them.  If not, ... well, you know.]
+	 ||     Interfaces:  
 	 ||
 	 |+-----------------------------------------------------------------------
 	 ||
-	 ||      Constants:  [Name all public class constants, and provide a very
-	 ||                   brief (but useful!) description of each.]
+	 ||      Constants:  
 	 ||
 	 |+-----------------------------------------------------------------------
 	 ||
-	 ||   Constructors:  [List the names and arguments of all defined
-	 ||                   constructors.]
+	 ||   Constructors:  
 	 ||
-	 ||  Class Methods:  [List the names, arguments, and return types of all
-	 ||                   public class methods.]
+	 ||  Class Methods:  
 	 ||
-	 ||  Inst. Methods:  [List the names, arguments, and return types of all
-	 ||                   public instance methods.]
+	 ||  Inst. Methods:  
 	 ||
 	 ++-----------------------------------------------------------------------*/
 	private class btnCloseListener implements ActionListener {

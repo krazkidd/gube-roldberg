@@ -162,6 +162,7 @@ public class Ramp extends Part {
 	 * @return <code>Vector</code>
 	 */
 	private Vector getRampFaceVectorBeginPos() {
+		// TODO i think this is where the ramp appears off-mouse cursor
 		Vector result = new Vector(this.position.getX(), this.position.getY());
 		result.add(this.rampFaceVectorBeginPos);
 		return result;

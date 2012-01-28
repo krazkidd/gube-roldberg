@@ -39,34 +39,27 @@ import parts.PartType;
 
 /*+----------------------------------------------------------------------
 ||
-||  Class [Class Name] 
+||  Class 
 ||
-||         Author:  [Your Name]
+||         Author:  
 ||
-||        Purpose:  [A description of why this class exists.  For what
-||                   reason was it written?  Which jobs does it perform?]
+||        Purpose:  
 ||
-||  Inherits From:  [If this class is a subclass of another, name it.
-||                   If not, just say "None."]
+||  Inherits From:  
 ||
-||     Interfaces:  [If any predefined interfaces are implemented by
-||                   this class, name them.  If not, ... well, you know.]
+||     Interfaces:  
 ||
 |+-----------------------------------------------------------------------
 ||
-||      Constants:  [Name all public class constants, and provide a very
-||                   brief (but useful!) description of each.]
+||      Constants:  
 ||
 |+-----------------------------------------------------------------------
 ||
-||   Constructors:  [List the names and arguments of all defined
-||                   constructors.]
+||   Constructors:  
 ||
-||  Class Methods:  [List the names, arguments, and return types of all
-||                   public class methods.]
+||  Class Methods:  
 ||
-||  Inst. Methods:  [List the names, arguments, and return types of all
-||                   public instance methods.]
+||  Inst. Methods:  
 ||
 ++-----------------------------------------------------------------------*/
 public class PartsPanel extends JPanel {
